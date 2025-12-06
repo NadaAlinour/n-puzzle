@@ -1,6 +1,8 @@
 // #include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <set>
 
 using namespace std;
 
@@ -8,6 +10,8 @@ class Board
 {
     int n; // size of n-puzzle
     vector<vector<int>> tiles;
+    int x; // x and y to track the position of the zero tile (i think)
+    int y;
     Board* parent; // pointer to the current state's parent in order to get the path later(?)
 
 public:
@@ -30,7 +34,14 @@ public:
         {
             for (int j = 0; j < n; j++)
             {
+                // record empty tile position
+                if(state[k] == 0) {
+                    this->x = i;
+                    this->y = j;
+                }
+
                 this->tiles[i][j] = state[k++];
+                
 
                 cout << this->tiles[i][j] << " ";
             }
@@ -66,6 +77,8 @@ public:
 
 
 
+
+
 int main()
 {
     /*cout << "Enter n-puzzle size: " << "\n";
@@ -83,7 +96,6 @@ int main()
     vector<int> initialState = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
     Board newBoard(n, initialState);
-    int isEqual = newBoard.isGoal();
 
 
     return 0;
