@@ -1,1 +1,1 @@
-Solving a problem from the edX course ColumbiaX: CSMM.101x Artificial Intelligence (AI) where an agent is required to be implement to solve the n-puzzle game.
+Solving a problem from the edX course ColumbiaX: CSMM.101x Artificial Intelligence (AI) where an agent is required to be implemented to solve the n-puzzle game.
