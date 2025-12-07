@@ -2,11 +2,15 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <set>
+#include <unordered_set>
+#include <optional>
 
 #include "board.hpp"
 
 using namespace std;
+
+
+
 
 
 int main()
@@ -24,10 +28,12 @@ int main()
     }*/
 
     int n = 3;
-    vector<vector<int>> initialState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+    vector<vector<int>> initialState = {{1, 0, 2}, {3, 4, 5}, {6, 7, 8}};
 
-    Board board(n, initialState, 0, 0);
+    Board board(n, initialState);
     board.printState();
+
+    searchBFS(board);
     
     return 0;
 }

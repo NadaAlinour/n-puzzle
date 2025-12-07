@@ -4,6 +4,8 @@
 
 class Board
 {
+
+public:
     int n; // size of n-puzzle
     std::vector<std::vector<int>> tiles;
     int x; // x and y to track the position of the zero tile (i think)
@@ -14,9 +16,18 @@ public:
     
     // (!): have to resize the vector first so it has allocated space to initialize
 
-    Board(int n, std::vector<std::vector<int>> &state, int x, int y):n(n), tiles(state), x(x), y(y)
+    Board(int n, std::vector<std::vector<int>> &state):n(n), tiles(state)
     {
         std::cout << "Initializing board.." << "\n";
+        // find empty tile position
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if(tiles[i][j] == 0) {
+                    this->x = i;
+                    this->y = j;
+                }
+            } 
+        }
     }
 
     /* method to print the state of the board (node) */
@@ -32,6 +43,8 @@ public:
             std::cout << "\n";
     }
 
+   
+
     /* method to test if current tiles match goal - returns 1 if equal, 0 otherwise */
     int isGoal() {
         return this->tiles == std::vector<std::vector<int>> {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
@@ -39,27 +52,33 @@ public:
 
     /* checks if move is valid, returns 1 if true and 0 otherwise */
     int isValidMove(char move) {
+         /*so apparently if a case does not return it continues on to the following cases so we should break,
+        the point of the case is that it starts at the matching one -
+        if we dont break out of the case it falls through to the case after :\ */
         switch(move) {
             case 'r':
                 if (this->y + 1 < this->n) return 1;
+                break; 
             case 'l':
                 if (this->y - 1 >= 0) return 1;
+                break;
             case 'u':
                 if (this->x - 1 >= 0) return 1;
+                break;
             case 'd':
                 if (this->x + 1 < this->n) return 1;
+                break;
             default:
                 std::cout << "Invalid move option..\n";
                 break;
         }
 
-        return -1;
+        return 0;
     }
 
     /* generalized move method, destination coordinates provided as params */
     Board move(int xCoordinate, int yCoordinate) {
             Board newBoard(*this); // *this copies the constructor since i want an exact copy of the object
-
             std::swap(newBoard.tiles[newBoard.x][newBoard.y], newBoard.tiles[xCoordinate][yCoordinate]);
             newBoard.x = xCoordinate;
             newBoard.y = yCoordinate;
