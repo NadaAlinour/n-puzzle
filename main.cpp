@@ -33,7 +33,7 @@ int main()
     Board board(n, initialState);
     board.printState();
 
-    searchBFS(board);
+    //searchBFS(board);
     
     return 0;
 }
