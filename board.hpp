@@ -43,7 +43,27 @@ public:
             std::cout << "\n";
     }
 
-   
+    /* overloading the == operator for unordered_set*/
+    bool operator==(const Board& other) const
+    {
+        if (this->tiles == other.tiles) return true;
+        else return false;
+    }
+
+    /* hash function for unordered_set*/
+    struct HashFunction
+  {
+    size_t operator()(const Board& board) const
+    {
+      size_t h = 0;
+      for (int i = 0; i < board.n; i++) {
+        for (int j = 0; j < board.n; j++) {
+            h = h * 31 + std::hash<int>()(board.tiles[i][j]);
+        }
+      }
+      return h;
+    }
+  };
 
     /* method to test if current tiles match goal - returns 1 if equal, 0 otherwise */
     int isGoal() {
