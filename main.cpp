@@ -69,8 +69,6 @@ public:
 
     Board moveRight() {
             Board newBoard(*this); // *this copies the constructor since i want an exact copy of the object
-            newBoard.x = this->x;
-            newBoard.y = this->y;
 
             swap(newBoard.tiles[newBoard.x][newBoard.y], newBoard.tiles[newBoard.x][newBoard.y + 1]);
             newBoard.y++; 
@@ -82,9 +80,7 @@ public:
 
     Board moveLeft() {
             Board newBoard(*this); 
-            newBoard.x = this->x;
-            newBoard.y = this->y;
-
+            
             swap(newBoard.tiles[newBoard.x][newBoard.y], newBoard.tiles[newBoard.x][newBoard.y - 1]);
             newBoard.y--; 
 
@@ -95,8 +91,6 @@ public:
 
     Board moveUp() {
             Board newBoard(*this); 
-            newBoard.x = this->x;
-            newBoard.y = this->y;
 
             swap(newBoard.tiles[newBoard.x][newBoard.y], newBoard.tiles[newBoard.x - 1][newBoard.y]);
             newBoard.x--; 
@@ -108,8 +102,6 @@ public:
 
     Board moveDown() {
             Board newBoard(*this); 
-            newBoard.x = this->x;
-            newBoard.y = this->y;
 
             swap(newBoard.tiles[newBoard.x][newBoard.y], newBoard.tiles[newBoard.x + 1][newBoard.y]);
             newBoard.x++; 
