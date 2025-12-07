@@ -9,7 +9,6 @@
 using namespace std;
 
 
-
 int main()
 {
     /*cout << "Enter n-puzzle size: " << "\n";
@@ -27,8 +26,8 @@ int main()
     int n = 3;
     vector<vector<int>> initialState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
 
-    Board newBoard(n, initialState);
-    newBoard.printState();
-
+    Board board(n, initialState, 0, 0);
+    board.printState();
+    
     return 0;
 }
