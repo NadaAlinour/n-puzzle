@@ -1,82 +1,13 @@
 // #include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <unordered_set>
 #include <chrono>
 
 #include "board.hpp"
 
 using namespace std;
 
-void searchBFS(Board board)
-{   int nodes_expanded = 0;
-    unordered_set<Board, Board::HashFunction> explored;
-    queue<Board> frontier;
-    frontier.push(board); // push initial state to the queue
-    unordered_set<Board, Board::HashFunction> inFrontier;
-    inFrontier.insert(board);
-
-    
-    int frontier_size = 0;
-    int k = 0;
-    while (!frontier.empty())
-    {
-        cout << "LEVEL " << k++ << "\n";
-        frontier_size = frontier.size();
-        cout << "size: " << frontier_size << "\n";
-        nodes_expanded += frontier_size;
-
-        for (int i = 0; i < frontier_size; i++)
-        {
-            Board currBoard = frontier.front();
-            frontier.pop();
-            explored.insert(currBoard);
-            cout << "CURRENT POPPED: \n";
-            currBoard.printState();
-
-            if (currBoard.isGoal())
-            {
-                cout << "Found goal state.. \n";
-                cout << "nodes expanded: " << nodes_expanded << "\n";
-
-                return;
-            }
-
-            // get child states
-            vector<Board> neighbours;
-
-            if (currBoard.isValidMove('u'))
-                neighbours.push_back(currBoard.move(currBoard.x - 1, currBoard.y));
-
-            if (currBoard.isValidMove('d'))
-                neighbours.push_back(currBoard.move(currBoard.x + 1, currBoard.y));
-
-            if (currBoard.isValidMove('r'))
-                neighbours.push_back(currBoard.move(currBoard.x, currBoard.y + 1));
-
-            if (currBoard.isValidMove('l'))
-                neighbours.push_back(currBoard.move(currBoard.x, currBoard.y - 1));
-
-            // explore neighbours
-            for (Board neighbour : neighbours)
-            {
-                cout << "\n";
-
-                if (!explored.count(neighbour) && !inFrontier.count(neighbour))
-                {
-                    cout << "im pushed" << "\n";
-                    neighbour.printState();
-
-                    frontier.push(neighbour);
-                    inFrontier.insert(neighbour);
-                }
-            }
-        }
-    }
-
-    cout << "didnt find a solution..\n";
-}
+void searchBFS(Board board);
 
 int main()
 {
@@ -85,18 +16,16 @@ int main()
 
     Board board(n, initialState);
     board.printState();
+    cout << "......................\n";
 
 
-    
     auto start = std::chrono::high_resolution_clock::now();
     searchBFS(board);
     auto end = std::chrono::high_resolution_clock::now();
 
     // get number of microseconds
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-
     cout << "(BFS) running time in microseconds: " << duration.count() << " µs\n";
-
 
 
     return 0;
