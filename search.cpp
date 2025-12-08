@@ -22,12 +22,12 @@ void searchBFS(Board board)
         cout << "LEVEL " << k++ << "\n";
         frontier_size = frontier.size();
         cout << "size: " << frontier_size << "\n";
-        nodes_expanded += frontier_size;
 
         for (int i = 0; i < frontier_size; i++)
         {
             Board currBoard = frontier.front();
             frontier.pop();
+            nodes_expanded += 1;
             explored.insert(currBoard);
             cout << "CURRENT POPPED: \n";
             currBoard.printState();
