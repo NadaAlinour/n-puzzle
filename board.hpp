@@ -103,8 +103,8 @@ public:
             newBoard.x = xCoordinate;
             newBoard.y = yCoordinate;
 
-            std::cout << "moving..\n";
-            newBoard.printState();
+            //std::cout << "moving..\n";
+            //newBoard.printState();
             return newBoard;
     }
 
