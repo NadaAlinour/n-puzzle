@@ -3,25 +3,21 @@
 #include <vector>
 #include <queue>
 #include <unordered_set>
-#include <optional>
+#include <chrono>
 
 #include "board.hpp"
 
 using namespace std;
 
 void searchBFS(Board board)
-{
+{   int nodes_expanded = 0;
     unordered_set<Board, Board::HashFunction> explored;
     queue<Board> frontier;
     frontier.push(board); // push initial state to the queue
     unordered_set<Board, Board::HashFunction> inFrontier;
     inFrontier.insert(board);
 
-    // gonna print out the boards generated level by level
-    // cuz something is def wrong
-    // and also i want to say that i can encode the tiles into a string to insert into the sets
-    // since apparently strings have their own hashing(?) so i wouldnt have ot write a hashing
-    // function(?) :)
+    
     int frontier_size = 0;
     int k = 0;
     while (!frontier.empty())
@@ -29,6 +25,7 @@ void searchBFS(Board board)
         cout << "LEVEL " << k++ << "\n";
         frontier_size = frontier.size();
         cout << "size: " << frontier_size << "\n";
+        nodes_expanded += frontier_size;
 
         for (int i = 0; i < frontier_size; i++)
         {
@@ -41,6 +38,8 @@ void searchBFS(Board board)
             if (currBoard.isGoal())
             {
                 cout << "Found goal state.. \n";
+                cout << "nodes expanded: " << nodes_expanded << "\n";
+
                 return;
             }
 
@@ -48,25 +47,16 @@ void searchBFS(Board board)
             vector<Board> neighbours;
 
             if (currBoard.isValidMove('u'))
-            {
-                // cout << "moving upwards\n";
                 neighbours.push_back(currBoard.move(currBoard.x - 1, currBoard.y));
-            }
+
             if (currBoard.isValidMove('d'))
-            {
-                // cout << "moving downwards\n";
                 neighbours.push_back(currBoard.move(currBoard.x + 1, currBoard.y));
-            }
+
             if (currBoard.isValidMove('r'))
-            {
-                // cout << "moving righwards\n";
                 neighbours.push_back(currBoard.move(currBoard.x, currBoard.y + 1));
-            }
+
             if (currBoard.isValidMove('l'))
-            {
-                // cout << "moving leftwards\n";
                 neighbours.push_back(currBoard.move(currBoard.x, currBoard.y - 1));
-            }
 
             // explore neighbours
             for (Board neighbour : neighbours)
@@ -96,7 +86,18 @@ int main()
     Board board(n, initialState);
     board.printState();
 
+
+    
+    auto start = std::chrono::high_resolution_clock::now();
     searchBFS(board);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // get number of microseconds
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    cout << "(BFS) running time in microseconds: " << duration.count() << " µs\n";
+
+
 
     return 0;
 }
