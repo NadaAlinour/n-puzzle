@@ -126,20 +126,23 @@ public:
     void getPathToParent() {
 
         std::deque<Board*> boards;
+        int cost_of_path = 0;
         
         Board* curr = this;
 
         while(curr != nullptr) {
             boards.push_back(curr);
             curr = curr->parent;
+            cost_of_path++;
         }
 
-        std::cout << boards.size() << std::endl;
 
         while(!boards.empty()) {
             boards.back()->printState();
             boards.pop_back();
         }
+
+        std::cout << "Cost of path: " << cost_of_path << std::endl;
 
 
     }
