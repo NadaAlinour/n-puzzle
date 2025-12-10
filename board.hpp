@@ -11,11 +11,12 @@ public:
     int x; // x and y to track the position of the zero tile (i think)
     int y;
     Board *parent; // pointer to the current state's parent in order to get the path later(?)
+    string move; // move that caused this state
 
 public:
     // (!): have to resize the vector first so it has allocated space to initialize
 
-    Board(int n, std::vector<std::vector<int>> &state, Board *parent = nullptr) : n(n), tiles(state), parent(parent)
+    Board(int n, std::vector<std::vector<int>> &state, Board *parent = nullptr, string move = "") : n(n), tiles(state), parent(parent), move(move)
     {
         //std::cout << "Initializing board.." << "\n";
         // find empty tile position
