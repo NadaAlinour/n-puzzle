@@ -9,7 +9,7 @@ using namespace std;
 
 
 // make sure to update the function prototype if the definition changes(?)
-void searchBFS(Board* board);
+Board* searchBFS(Board* board);
 
 int main()
 {
@@ -20,14 +20,19 @@ int main()
     board->printState();
     cout << "......................\n";
 
+    /* ................... BREADTH FIRST SEARCH ....................*/
 
     auto start = std::chrono::high_resolution_clock::now();
-    searchBFS(board);
+    Board* goal = searchBFS(board);
     auto end = std::chrono::high_resolution_clock::now();
 
     // get number of microseconds
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     cout << "(BFS) running time in microseconds: " << duration.count() << " µs\n";
+
+    // print path to parent
+    goal->getPathToParent();
+    
 
 
     return 0;

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void searchBFS(Board* board)
+Board* searchBFS(Board* board)
 {
     int nodes_expanded = 0;
     unordered_set<Board*, Board::HashFunction> explored;
@@ -30,17 +30,12 @@ void searchBFS(Board* board)
 
             nodes_expanded += 1;
             explored.insert(currBoard);
-            // cout << "CURRENT POPPED: \n";
 
             if (currBoard->isGoal())
             {
                 cout << "Found goal state.. \n";
-                currBoard->printState();
-                currBoard->parent->printState();
-                /*cout << &currBoard << "\n";
-                cout << currBoard.parent << "\n";*/
                 cout << "nodes expanded: " << nodes_expanded - 1 << "\n";
-                return;
+                return currBoard;
             }
 
             // get child states
@@ -78,4 +73,5 @@ void searchBFS(Board* board)
     }
 
     cout << "didnt find a solution..\n";
+    return board; // return root
 }

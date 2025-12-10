@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <deque>
 
 class Board
 {
@@ -121,7 +122,27 @@ public:
         return newBoard;
     }
 
-    /* TODO: method to get parents up to root */
+    /* method to get parents up to root */
+    void getPathToParent() {
+
+        std::deque<Board*> boards;
+        
+        Board* curr = this;
+
+        while(curr != nullptr) {
+            boards.push_back(curr);
+            curr = curr->parent;
+        }
+
+        std::cout << boards.size() << std::endl;
+
+        while(!boards.empty()) {
+            boards.back()->printState();
+            boards.pop_back();
+        }
+
+
+    }
     
     
 };
