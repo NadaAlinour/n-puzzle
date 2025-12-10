@@ -8,11 +8,12 @@
 using namespace std;
 
 void searchBFS(Board board);
+void getPath(Board board);
 
 int main()
 {
     int n = 3;
-    vector<vector<int>> initialState = {{1, 2, 5}, {3, 4, 0}, {6, 7, 8}};
+    vector<vector<int>> initialState = {{1, 0, 2}, {3, 4, 5}, {6, 7, 8}};
 
     Board board(n, initialState);
     board.printState();
