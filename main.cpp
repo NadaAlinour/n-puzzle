@@ -7,16 +7,17 @@
 
 using namespace std;
 
-void searchBFS(Board board);
-void getPath(Board board);
+
+// make sure to update the function prototype if the definition changes(?)
+void searchBFS(Board* board);
 
 int main()
 {
     int n = 3;
     vector<vector<int>> initialState = {{1, 0, 2}, {3, 4, 5}, {6, 7, 8}};
 
-    Board board(n, initialState);
-    board.printState();
+    Board* board = new Board(n, initialState);
+    board->printState();
     cout << "......................\n";
 
 

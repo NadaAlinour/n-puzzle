@@ -46,9 +46,9 @@ public:
     }
 
     /* overloading the == operator for unordered_set*/
-    bool operator==(const Board &other) const
+    bool operator==(const Board* other) const
     {
-        if (this->tiles == other.tiles)
+        if (this->tiles == other->tiles)
             return true;
         else
             return false;
@@ -57,14 +57,14 @@ public:
     /* hash function for unordered_set*/
     struct HashFunction
     {
-        size_t operator()(const Board &board) const
+        size_t operator()(const Board* board) const
         {
             size_t h = 0;
-            for (int i = 0; i < board.n; i++)
+            for (int i = 0; i < board->n; i++)
             {
-                for (int j = 0; j < board.n; j++)
+                for (int j = 0; j < board->n; j++)
                 {
-                    h = h * 31 + std::hash<int>()(board.tiles[i][j]);
+                    h = h * 31 + std::hash<int>()(board->tiles[i][j]);
                 }
             }
             return h;
@@ -110,13 +110,13 @@ public:
     }
 
     /* generalized move method, destination coordinates provided as params */
-    Board move(Board *parent, int xCoordinate, int yCoordinate)
+    Board* move(Board *parent, int xCoordinate, int yCoordinate)
     {
-        Board newBoard(this->n, this->tiles, parent); // probably redundant
+        Board *newBoard = new Board(this->n, this->tiles, parent); // probably redundant
 
-        std::swap(newBoard.tiles[newBoard.x][newBoard.y], newBoard.tiles[xCoordinate][yCoordinate]);
-        newBoard.x = xCoordinate;
-        newBoard.y = yCoordinate;
+        std::swap(newBoard->tiles[newBoard->x][newBoard->y], newBoard->tiles[xCoordinate][yCoordinate]);
+        newBoard->x = xCoordinate;
+        newBoard->y = yCoordinate;
 
         return newBoard;
     }
