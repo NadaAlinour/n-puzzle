@@ -17,8 +17,8 @@ public:
 
     Board(int n, std::vector<std::vector<int>> &state, Board *parent = nullptr) : n(n), tiles(state), parent(parent)
     {
-        //std::cout << "Initializing board.." << "\n";
-        // find empty tile position
+        // std::cout << "Initializing board.." << "\n";
+        //  find empty tile position
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
@@ -46,19 +46,19 @@ public:
         std::cout << "\n";
     }
 
-    /* overloading the == operator for unordered_set*/
-    bool operator==(const Board* other) const
+    /* comparison for unordered_set */
+    struct BoardEqual
     {
-        if (this->tiles == other->tiles)
-            return true;
-        else
-            return false;
-    }
+        bool operator()(const Board *a, const Board *b) const
+        {
+            return a->tiles == b->tiles;
+        }
+    };
 
     /* hash function for unordered_set*/
     struct HashFunction
     {
-        size_t operator()(const Board* board) const
+        size_t operator()(const Board *board) const
         {
             size_t h = 0;
             for (int i = 0; i < board->n; i++)
@@ -81,9 +81,6 @@ public:
     /* checks if move is valid, returns 1 if true and 0 otherwise */
     int isValidMove(char move)
     {
-        /*so apparently if a case does not return it continues on to the following cases so we should break,
-       the point of the case is that it starts at the matching one -
-       if we dont break out of the case it falls through to the case after :\ */
         switch (move)
         {
         case 'r':
@@ -111,7 +108,7 @@ public:
     }
 
     /* generalized move method, destination coordinates provided as params */
-    Board* move(Board *parent, int xCoordinate, int yCoordinate)
+    Board *move(Board *parent, int xCoordinate, int yCoordinate)
     {
         Board *newBoard = new Board(this->n, this->tiles, parent); // probably redundant
 
@@ -123,29 +120,27 @@ public:
     }
 
     /* method to get parents up to root */
-    void getPathToParent() {
+    void getPathToParent()
+    {
 
-        std::deque<Board*> boards;
-        int cost_of_path = 0;
-        
-        Board* curr = this;
+        std::deque<Board *> boards;
+        int cost_of_path = -1;
 
-        while(curr != nullptr) {
+        Board *curr = this;
+
+        while (curr != nullptr)
+        {
             boards.push_back(curr);
             curr = curr->parent;
             cost_of_path++;
         }
 
-
-        while(!boards.empty()) {
+        while (!boards.empty())
+        {
             boards.back()->printState();
             boards.pop_back();
         }
 
         std::cout << "Cost of path: " << cost_of_path << std::endl;
-
-
     }
-    
-    
 };
