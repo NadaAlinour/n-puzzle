@@ -7,6 +7,26 @@
 
 using namespace std;
 
+/* method to get neighbours by applying all possible board moves */
+vector<Board *> getNeighbours(Board *board)
+{
+    vector<Board *> neighbours;
+
+    if (board->isValidMove('u'))
+        neighbours.push_back(board->move(board, board->x - 1, board->y));
+
+    if (board->isValidMove('d'))
+        neighbours.push_back(board->move(board, board->x + 1, board->y));
+
+    if (board->isValidMove('l'))
+        neighbours.push_back(board->move(board, board->x, board->y - 1));
+
+    if (board->isValidMove('r'))
+        neighbours.push_back(board->move(board, board->x, board->y + 1));
+
+    return neighbours;
+}
+
 Board *searchBFS(Board *board)
 {
     int nodes_expanded = 0;
@@ -17,8 +37,6 @@ Board *searchBFS(Board *board)
 
     frontier.push(board); // push initial state to the queue
     inFrontier.insert(board);
-
-    vector<Board *> neighbours;
 
     int frontier_size = 0;
     int k = 0;
@@ -44,19 +62,8 @@ Board *searchBFS(Board *board)
                 return currBoard;
             }
 
-            // get child states
-
-            if (currBoard->isValidMove('u'))
-                neighbours.push_back(currBoard->move(currBoard, currBoard->x - 1, currBoard->y));
-
-            if (currBoard->isValidMove('d'))
-                neighbours.push_back(currBoard->move(currBoard, currBoard->x + 1, currBoard->y));
-
-            if (currBoard->isValidMove('l'))
-                neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y - 1));
-
-            if (currBoard->isValidMove('r'))
-                neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y + 1));
+            // get neighbours
+            vector<Board *> neighbours = getNeighbours(currBoard);
 
             // explore neighbours
             cout << "......................\n";
@@ -89,8 +96,6 @@ Board *searchDFS(Board *board)
     frontier.push(board); // push initial state to the queue
     inFrontier.insert(board);
 
-    vector<Board *> neighbours;
-
     while (!frontier.empty())
     {
         Board *currBoard = frontier.top();
@@ -108,19 +113,8 @@ Board *searchDFS(Board *board)
             return currBoard;
         }
 
-        // get child states
-
-        if (currBoard->isValidMove('u'))
-            neighbours.push_back(currBoard->move(currBoard, currBoard->x - 1, currBoard->y));
-
-        if (currBoard->isValidMove('d'))
-            neighbours.push_back(currBoard->move(currBoard, currBoard->x + 1, currBoard->y));
-
-        if (currBoard->isValidMove('l'))
-            neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y - 1));
-
-        if (currBoard->isValidMove('r'))
-            neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y + 1));
+        // get neighbours
+        vector<Board *> neighbours = getNeighbours(currBoard);
 
         // explore neighbours
         cout << "......................\n";

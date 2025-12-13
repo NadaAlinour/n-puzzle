@@ -27,8 +27,8 @@ int main()
     /* ................... BREADTH FIRST SEARCH ....................*/
 
     auto start = std::chrono::high_resolution_clock::now();
-    //Board* goal = searchBFS(board);
-    Board* goal = searchDFS(board);
+    Board* goal = searchBFS(board);
+    //Board* goal = searchDFS(board);
 
     auto end = std::chrono::high_resolution_clock::now();
 
