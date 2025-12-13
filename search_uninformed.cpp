@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
 #include <unordered_set>
 
 using namespace std;
@@ -10,7 +11,7 @@ Board *searchBFS(Board *board)
 {
     int nodes_expanded = 0;
     unordered_set<Board *, Board::HashFunction, Board::BoardEqual> explored;
-     
+
     queue<Board *> frontier;
     unordered_set<Board *, Board::HashFunction> inFrontier; // frontier lookup
 
@@ -39,7 +40,7 @@ Board *searchBFS(Board *board)
             {
                 cout << "Found goal state.. \n";
                 cout << "nodes expanded: " << nodes_expanded - 1 << "\n";
-                
+
                 return currBoard;
             }
 
@@ -51,11 +52,11 @@ Board *searchBFS(Board *board)
             if (currBoard->isValidMove('d'))
                 neighbours.push_back(currBoard->move(currBoard, currBoard->x + 1, currBoard->y));
 
-            if (currBoard->isValidMove('r'))
-                neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y + 1));
-
             if (currBoard->isValidMove('l'))
                 neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y - 1));
+
+            if (currBoard->isValidMove('r'))
+                neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y + 1));
 
             // explore neighbours
             cout << "......................\n";
@@ -63,15 +64,77 @@ Board *searchBFS(Board *board)
             for (Board *neighbour : neighbours)
             {
                 if (!explored.count(neighbour) && !inFrontier.count(neighbour))
-                {                    
+                {
                     frontier.push(neighbour);
                     inFrontier.insert(neighbour);
-                } 
+                }
             }
 
             neighbours.clear();
-            
         }
+    }
+
+    cout << "didnt find a solution..\n";
+    return board; // return root
+}
+
+Board *searchDFS(Board *board)
+{
+    int nodes_expanded = 0;
+    unordered_set<Board *, Board::HashFunction, Board::BoardEqual> explored;
+
+    stack<Board *> frontier;
+    unordered_set<Board *, Board::HashFunction> inFrontier; // frontier lookup
+
+    frontier.push(board); // push initial state to the queue
+    inFrontier.insert(board);
+
+    vector<Board *> neighbours;
+
+    while (!frontier.empty())
+    {
+        Board *currBoard = frontier.top();
+
+        frontier.pop();
+        nodes_expanded += 1;
+
+        explored.insert(currBoard);
+
+        if (currBoard->isGoal())
+        {
+            cout << "Found goal state.. \n";
+            cout << "nodes expanded: " << nodes_expanded - 1 << "\n";
+
+            return currBoard;
+        }
+
+        // get child states
+
+        if (currBoard->isValidMove('u'))
+            neighbours.push_back(currBoard->move(currBoard, currBoard->x - 1, currBoard->y));
+
+        if (currBoard->isValidMove('d'))
+            neighbours.push_back(currBoard->move(currBoard, currBoard->x + 1, currBoard->y));
+
+        if (currBoard->isValidMove('l'))
+            neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y - 1));
+
+        if (currBoard->isValidMove('r'))
+            neighbours.push_back(currBoard->move(currBoard, currBoard->x, currBoard->y + 1));
+
+        // explore neighbours
+        cout << "......................\n";
+
+        for (Board *neighbour : neighbours)
+        {
+            if (!explored.count(neighbour) && !inFrontier.count(neighbour))
+            {
+                frontier.push(neighbour);
+                inFrontier.insert(neighbour);
+            }
+        }
+
+        neighbours.clear();
     }
 
     cout << "didnt find a solution..\n";

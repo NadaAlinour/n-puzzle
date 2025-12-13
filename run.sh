@@ -1,3 +1,3 @@
 #!/bin/bash
 
-g++ main.cpp search.cpp board.hpp -o main && ./main
+g++ main.cpp search_uninformed.cpp board.hpp -o main && ./main
