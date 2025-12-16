@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <string>
 
 #include "board.hpp"
 
@@ -13,21 +14,29 @@ Board *searchDFS(Board *board);
 
 int main()
 {
+    string choice_s;
     int choice;
 
-    do
+    while (true)
     {
         cout << "Please choose a search algorithm: \n";
         cout << "1. BFS (Breadth first search)\n";
         cout << "2. DFS (Depth first search)\n";
 
         cout << "\n-> ";
-        cin >> choice;
-        cout << "\n";
 
+        cin >> choice_s;
 
-    } while (choice != 1 && choice != 2);
+        // handling invalid input
+        if (choice_s == "1" || choice_s == "2")
+        {
+            choice = stoi(choice_s);
+            break;
+        }
 
+        cout << "Invalid input. Please try again.\n\n";
+        continue;
+    }
 
     /* INITIALIZATION */
     int n = 3;
