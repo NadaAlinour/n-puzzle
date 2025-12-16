@@ -42,9 +42,7 @@ Board *searchBFS(Board *board)
     int k = 0;
     while (!frontier.empty())
     {
-        cout << "LEVEL " << k++ << "\n";
         frontier_size = frontier.size();
-        cout << "size: " << frontier_size << "\n";
 
         for (int i = 0; i < frontier_size; i++)
         {
@@ -66,8 +64,6 @@ Board *searchBFS(Board *board)
             vector<Board *> neighbours = getNeighbours(currBoard);
 
             // explore neighbours
-            cout << "......................\n";
-
             for (Board *neighbour : neighbours)
             {
                 if (!explored.count(neighbour) && !inFrontier.count(neighbour))
@@ -82,7 +78,7 @@ Board *searchBFS(Board *board)
     }
 
     cout << "didnt find a solution..\n";
-    return board; // return root
+    return board;
 }
 
 Board *searchDFS(Board *board)
@@ -117,8 +113,6 @@ Board *searchDFS(Board *board)
         vector<Board *> neighbours = getNeighbours(currBoard);
 
         // explore neighbours
-        cout << "......................\n";
-
         for (Board *neighbour : neighbours)
         {
             if (!explored.count(neighbour) && !inFrontier.count(neighbour))
@@ -132,5 +126,5 @@ Board *searchDFS(Board *board)
     }
 
     cout << "didnt find a solution..\n";
-    return board; // return root
+    return board; // return current board (last i guess?)
 }
